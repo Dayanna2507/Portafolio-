@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dayanna Corredor — Portafolio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fucsia: #C8185A;
+    --fucsia-light: #E8407A;
+    --fucsia-dark: #8C0E3C;
+    --rosa: #F7C5D5;
+    --rosa-pale: #FFF0F5;
+    --cream: #FAF6F0;
+    --dark: #1A0A10;
+    --mid: #4A2030;
+    --text: #2D1018;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--fucsia);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, background 0.2s ease;
+    mix-blend-mode: multiply;
+  }
+  .cursor-follower {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--fucsia);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.18s ease;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 20px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(250,246,240,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(200,24,90,0.08);
+    transition: all 0.3s ease;
+  }
+  nav .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--fucsia);
+    letter-spacing: -0.02em;
+  }
+  nav ul {
+    list-style: none;
+    display: flex; gap: 36px;
+  }
+  nav ul li a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    transition: color 0.2s;
+    position: relative;
+  }
+  nav ul li a::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--fucsia);
+    transition: width 0.3s ease;
+  }
+  nav ul li a:hover { color: var(--fucsia); }
+  nav ul li a:hover::after { width: 100%; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+  }
+  .hero-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--fucsia);
+    opacity: 0.06;
+    pointer-events: none;
+  }
+  .hero-bg-circle.c1 { width: 600px; height: 600px; top: -200px; right: -100px; }
+  .hero-bg-circle.c2 { width: 300px; height: 300px; bottom: -50px; left: 10%; opacity: 0.04; }
+
+  .hero-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fucsia);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+  .hero-label::before { content: '✦'; font-size: 0.9rem; }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--dark);
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+  .hero-title span {
+    font-style: italic;
+    color: var(--fucsia);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--mid);
+    max-width: 420px;
+    margin: 28px 0 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+  .tag {
+    padding: 8px 18px;
+    border: 1.5px solid rgba(200,24,90,0.25);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--fucsia);
+    background: transparent;
+    transition: all 0.2s ease;
+  }
+  .tag:hover {
+    background: var(--fucsia);
+    color: white;
+    border-color: var(--fucsia);
+  }
+
+  .hero-cta {
+    display: flex; gap: 16px; align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.1s forwards;
+  }
+  .btn-primary {
+    padding: 14px 32px;
+    background: var(--fucsia);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 30px rgba(200,24,90,0.25);
+  }
+  .btn-primary:hover {
+    background: var(--fucsia-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(200,24,90,0.35);
+  }
+  .btn-outline {
+    padding: 14px 32px;
+    background: transparent;
+    color: var(--fucsia);
+    border: 1.5px solid var(--fucsia);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    letter-spacing: 0.05em;
+  }
+  .btn-outline:hover {
+    background: var(--fucsia);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    opacity: 0;
+    animation: fadeIn 1.2s ease 0.6s forwards;
+  }
+
+  .hero-card {
+    background: white;
+    border-radius: 28px;
+    padding: 48px 44px;
+    box-shadow: 0 30px 80px rgba(200,24,90,0.12);
+    max-width: 380px;
+    width: 100%;
+    position: relative;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background: linear-gradient(135deg, var(--fucsia), transparent, var(--rosa));
+    border-radius: 30px;
+    z-index: -1;
+    opacity: 0.4;
+  }
+  
+  /* ESTILOS PARA LA FOTO DE PERFIL */
+  .profile-pic {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--fucsia);
+    margin-bottom: 16px;
+  }
+
+  .card-greeting {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--fucsia); font-weight: 500; margin-bottom: 12px;
+  }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900; line-height: 1.1;
+    color: var(--dark); margin-bottom: 20px;
+  }
+  .card-name em { color: var(--fucsia); font-style: italic; }
+  .card-divider { width: 48px; height: 2px; background: var(--fucsia); margin: 16px 0; border-radius: 2px; }
+  .card-desc {
+    font-size: 0.87rem; line-height: 1.7; color: var(--mid); margin-bottom: 28px;
+  }
+  .card-stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px; padding-top: 20px;
+    border-top: 1px solid rgba(200,24,90,0.1);
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900; color: var(--fucsia); display: block;
+  }
+  .stat-label {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--mid); font-weight: 500;
+  }
+  .floating-badge {
+    position: absolute;
+    background: var(--fucsia);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    box-shadow: 0 8px 24px rgba(200,24,90,0.3);
+  }
+  .badge-top { top: -16px; right: 24px; animation: float 3s ease-in-out infinite; }
+  .badge-bot { bottom: -16px; left: 24px; animation: float 3s ease-in-out infinite 1.5s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* SECTION BASE */
+  section { padding: 100px 60px; }
+  .section-label {
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--fucsia); font-weight: 500;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-label::before { content: '✦'; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
+    font-weight: 900; line-height: 1.05;
+    letter-spacing: -0.02em; color: var(--dark);
+    margin-bottom: 20px;
+  }
+  .section-title em { color: var(--fucsia); font-style: italic; }
+
+  /* SOBRE MÍ */
+  #sobre {
+    background: white;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center;
+  }
+  .sobre-text p {
+    font-size: 1rem; line-height: 1.85; color: var(--mid); margin-bottom: 20px; font-weight: 300;
+  }
+  .sobre-text strong { color: var(--fucsia); font-weight: 500; }
+  .traits {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px;
+  }
+  .trait {
+    padding: 8px 20px;
+    background: var(--rosa-pale);
+    border-radius: 100px;
+    font-size: 0.78rem; font-weight: 500; color: var(--fucsia);
+    border: 1px solid var(--rosa);
+  }
+  .sobre-visual {
+    background: linear-gradient(145deg, var(--fucsia), var(--fucsia-dark));
+    border-radius: 32px;
+    padding: 50px 40px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .sobre-visual::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .sobre-visual::after {
+    content: '';
+    position: absolute; bottom: -40px; left: -40px;
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .sobre-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-style: italic; font-weight: 700;
+    line-height: 1.3; margin-bottom: 24px; position: relative; z-index: 1;
+  }
+  .sobre-quote::before { content: '\201C'; font-size: 4rem; opacity: 0.2; display: block; margin-bottom: -20px; }
+  .sobre-detail { font-size: 0.85rem; opacity: 0.8; line-height: 1.7; position: relative; z-index: 1; }
+
+  /* HABILIDADES */
+  #habilidades { background: var(--cream); }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px;
+  }
+  .skill-card {
+    background: white;
+    border-radius: 20px;
+    padding: 36px 30px;
+    border: 1.5px solid transparent;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .skill-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 3px;
+    background: var(--fucsia);
+    transition: width 0.4s ease;
+  }
+  .skill-card:hover {
+    border-color: rgba(200,24,90,0.15);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(200,24,90,0.1);
+  }
+  .skill-card:hover::before { width: 100%; }
+  .skill-icon {
+    width: 48px; height: 48px;
+    background: var(--rosa-pale);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 20px;
+    border: 1px solid var(--rosa);
+  }
+  .skill-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700; color: var(--dark); margin-bottom: 10px;
+  }
+  .skill-desc {
+    font-size: 0.83rem; line-height: 1.7; color: var(--mid); font-weight: 300;
+  }
+
+  /* PROYECTOS */
+  #proyectos { background: var(--dark); }
+  #proyectos .section-label { color: var(--rosa); }
+  #proyectos .section-title { color: var(--white); }
+  #proyectos .section-title em { color: var(--fucsia-light); }
+  .projects-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 60px;
+  }
+  .project-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.35s ease;
+    cursor: none;
+  }
+  .project-card:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(200,24,90,0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 28px 60px rgba(200,24,90,0.2);
+  }
+  .project-img {
+    height: 200px;
+    position: relative; 
+    overflow: hidden;
+  }
+  .project-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .project-card:hover .project-img img {
+    transform: scale(1.05);
+  }
+
+  .project-body { padding: 28px; }
+  .project-type {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--fucsia-light); font-weight: 600; margin-bottom: 10px;
+  }
+  .project-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: white; margin-bottom: 10px;
+  }
+  .project-desc {
+    font-size: 0.82rem; line-height: 1.7; color: rgba(255,255,255,0.55); margin-bottom: 20px;
+  }
+  .project-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .chip {
+    padding: 5px 14px;
+    background: rgba(200,24,90,0.12);
+    border: 1px solid rgba(200,24,90,0.25);
+    border-radius: 100px;
+    font-size: 0.68rem; color: var(--fucsia-light); font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  
+  /* ESTILOS BOTÓN PDF */
+  .btn-pdf {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 1px solid var(--fucsia-light);
+    color: var(--fucsia-light);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    cursor: none;
+  }
+  .btn-pdf:hover {
+    background: var(--fucsia-light);
+    color: var(--dark);
+  }
+
+  /* GALERÍA */
+  #creaciones { background: white; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+    margin-top: 60px;
+  }
+  .gal-item {
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--rosa-pale);
+    aspect-ratio: 1;
+    position: relative;
+    border: 1.5px solid var(--rosa);
+    transition: all 0.3s ease;
+  }
+  .gal-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gal-item:hover { transform: scale(1.02); box-shadow: 0 16px 40px rgba(200,24,90,0.15); }
+  .gal-item.wide { grid-column: span 2; aspect-ratio: 2/1; }
+  .gal-item.tall { grid-row: span 2; aspect-ratio: 1/2; }
+  .gal-label {
+    position: absolute; bottom: 12px; left: 12px; right: 12px;
+    background: rgba(26,10,16,0.8);
+    color: white; padding: 8px 14px; border-radius: 10px;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em;
+    backdrop-filter: blur(6px);
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .gal-item:hover .gal-label { opacity: 1; }
+
+  /* CONTACTO */
+  #contacto {
+    background: linear-gradient(160deg, var(--fucsia-dark) 0%, var(--fucsia) 60%, var(--fucsia-light) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #contacto::before {
+    content: '✦';
+    position: absolute; font-size: 30rem; opacity: 0.03;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    color: white; line-height: 1; pointer-events: none;
+  }
+  #contacto .section-label { color: rgba(255,255,255,0.6); justify-content: center; }
+  #contacto .section-label::before { color: rgba(255,255,255,0.6); }
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.05; color: white;
+    letter-spacing: -0.02em; margin-bottom: 24px; position: relative; z-index: 1;
+  }
+  .contact-title em { font-style: italic; opacity: 0.8; }
+  .contact-sub {
+    font-size: 1rem; color: rgba(255,255,255,0.75); max-width: 480px;
+    margin: 0 auto 48px; line-height: 1.7; font-weight: 300; position: relative; z-index: 1;
+  }
+  .contact-links {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 16px;
+    position: relative; z-index: 1;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 28px;
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 100px;
+    color: white; text-decoration: none;
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.05em;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(10px);
+  }
+  .contact-link:hover {
+    background: white;
+    color: var(--fucsia);
+    border-color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  }
+  .contact-link span { font-size: 1rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    padding: 32px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; color: var(--fucsia);
+  }
+  .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--fucsia); border-radius: 2px; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    #hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 60px; }
+    #sobre { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+    section { padding: 80px 24px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gal-item.wide { grid-column: span 1; aspect-ratio: 1; }
+    .gal-item.tall { grid-row: span 1; aspect-ratio: 1; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    body { cursor: auto; }
+    .cursor, .cursor-follower { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="follower"></div>
+
+<nav id="nav">
+  <div class="logo">DC ✦</div>
+  <ul>
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#habilidades">Habilidades</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#creaciones">Creaciones</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+
+  <div class="hero-left">
+    <div class="hero-label">Portafolio 2026</div>
+    <h1 class="hero-title">Dayanna<br><span>Corredor</span></h1>
+    <p class="hero-subtitle">Diseñadora Gráfica · Estratega Digital · Especialista en IA. Transformo marcas y microempresas a través del <strong style="color:var(--fucsia)">diseño con propósito</strong>.</p>
+    <div class="hero-tags">
+      <span class="tag">Identidad de Marca</span>
+      <span class="tag">Estrategia Digital</span>
+      <span class="tag">IA Generativa</span>
+      <span class="tag">Fotografía</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#proyectos" class="btn-primary">Ver proyectos</a>
+      <a href="#contacto" class="btn-outline">Hablemos</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card">
+      <span class="floating-badge badge-top">✦ Disponible para proyectos</span>
+      <img src="imagenes/perfil-dayanna.jpg" alt="Dayanna Corredor" class="profile-pic">
+      <div class="card-greeting">Diseñadora & Estratega</div>
+      <div class="card-name">Creativa,<br><em>propositiva</em><br>y estratégica</div>
+      <div class="card-divider"></div>
+      <p class="card-desc">Combino diseño visual, tecnología de IA y estrategia de contenido para construir marcas que realmente conectan.</p>
+      <div class="card-stats">
+        <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Proyectos</span></div>
+        <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Habilidades</span></div>
+        <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Creatividad</span></div>
+      </div>
+      <span class="floating-badge badge-bot">📍 Chía, Cundinamarca</span>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="sobre-text reveal">
+    <div class="section-label">Sobre mí</div>
+    <h2 class="section-title">Detrás del<br><em>diseño</em></h2>
+    <p>Soy Dayanna, <strong>diseñadora gráfica en formación</strong> con enfoque estratégico y tecnológico. Me apasiona potenciar microempresas desde su identidad visual hasta su estrategia digital.</p>
+    <p>Integro <strong>Inteligencia Artificial</strong> en mis procesos creativos para optimizar tiempos y llevar cada proyecto al siguiente nivel, sin perder la esencia humana del diseño.</p>
+    <p>Extrovertida, viajera incansable, amante de los libros y convencida de que <strong>el diseño bien hecho transforma no solo marcas, sino personas</strong>.</p>
+    <div class="traits">
+      <span class="trait">✈️ Viajera</span>
+      <span class="trait">📚 Bookworm</span>
+      <span class="trait">🤖 IA Enthusiast</span>
+      <span class="trait">🎨 Creativa</span>
+      <span class="trait">💡 Estratega</span>
+      <span class="trait">✨ Propositiva</span>
+    </div>
+  </div>
+
+  <div class="sobre-visual reveal">
+    <div class="sobre-quote">El diseño con propósito transforma marcas y personas.</div>
+    <p class="sobre-detail">No solo diseño piezas bonitas — construyo sistemas visuales coherentes que comunican la esencia de cada marca y generan resultados reales para microempresas y emprendedores.</p>
+  </div>
+</section>
+
+<section id="habilidades">
+  <div class="reveal" style="text-align:center; max-width:600px; margin: 0 auto 0;">
+    <div class="section-label" style="justify-content:center;">Lo que sé hacer</div>
+    <h2 class="section-title">Habilidades &amp; <em>Herramientas</em></h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">Identidad Visual</div>
+      <p class="skill-desc">Diseño y rediseño de marca completo: logotipos, paletas de color, tipografía y sistemas visuales coherentes que representan la esencia de cada negocio.</p>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">📱</div>
+      <div class="skill-name">Estrategia Digital</div>
+      <p class="skill-desc">Parrilla de contenido, planificación editorial y estrategia integral para redes sociales que genera comunidad y convierte seguidores en clientes.</p>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">📸</div>
+      <div class="skill-name">Fotografía & Video</div>
+      <p class="skill-desc">Dirección de sesiones fotográficas con modelos reales y producción de cápsulas de video para redes sociales con edición en Photoshop y Lightroom.</p>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">IA Generativa</div>
+      <p class="skill-desc">Prompt engineering avanzado, copywriting asistido por IA, análisis de tendencias y organización de proyectos con herramientas como ChatGPT, Claude, Midjourney y Gemini.</p>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">✍️</div>
+      <div class="skill-name">Copywriting</div>
+      <p class="skill-desc">Redacción estratégica y creativa para marcas y campañas. Mensajes que conectan con la audiencia y comunican el valor diferencial de cada proyecto.</p>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🗺️</div>
+      <div class="skill-name">Organización Creativa</div>
+      <p class="skill-desc">Diagramas, estructuración de ideas y planeación de proyectos con herramientas visuales. Cada proyecto nace de un proceso claro y bien estructurado.</p>
+    </div>
+  </div>
+</section>
+
+<section id="proyectos">
+  <div class="reveal" style="text-align:center; max-width:600px; margin: 0 auto 0;">
+    <div class="section-label" style="justify-content:center;">Mi trabajo</div>
+    <h2 class="section-title">Proyectos <em>destacados</em></h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-img">
+        <img src="imagenes/proyecto-alba-botero.jpg" alt="Alba Botero — Bolsos & Marroquinería">
+      </div>
+      <div class="project-body">
+        <div class="project-type">✦ Cliente Real · 2024–2025</div>
+        <div class="project-name">Alba Botero — Bolsos & Marroquinería</div>
+        <p class="project-desc">Proyecto integral de marca: rediseño de identidad visual, dirección de fotografía con modelos reales, producción de cápsulas de video para redes sociales y diseño de parrilla de contenido y catálogo de productos.</p>
+        <div class="project-chips">
+          <span class="chip">Identidad Visual</span>
+          <span class="chip">Fotografía</span>
+          <span class="chip">Video</span>
+          <span class="chip">Estrategia Digital</span>
+        </div>
+        <a href="proyectos/alba-botero.pdf" target="_blank" class="btn-pdf">Ver PDF del Proyecto</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-img">
+        <img src="imagenes/proyecto-poker-ia.jpg" alt="Campaña Poker — IA Generativa">
+      </div>
+      <div class="project-body">
+        <div class="project-type">✦ Proyecto Académico · 2025</div>
+        <div class="project-name">Campaña Poker — IA Generativa</div>
+        <p class="project-desc">Campaña hipotética integral desarrollada con IA: estrategia completa, narrativa de marca y visualización total de la propuesta usando LLMs y herramientas de IA generativa de última generación.</p>
+        <div class="project-chips">
+          <span class="chip">IA Generativa</span>
+          <span class="chip">Estrategia</span>
+          <span class="chip">Narrativa</span>
+          <span class="chip">LLMs</span>
+        </div>
+        <a href="proyectos/poker-campaña.pdf" target="_blank" class="btn-pdf">Ver PDF de la Campaña</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-img">
+        <img src="imagenes/proyecto-monster.jpg" alt="Monster Energy — Ilustración de Marca">
+      </div>
+      <div class="project-body">
+        <div class="project-type">✦ Diseño Editorial</div>
+        <div class="project-name">Monster Energy — Ilustración de Marca</div>
+        <p class="project-desc">Campaña visual para Monster Energy "Madness Jamaica": ilustración digital de personaje, diseño de arte para latas y piezas gráficas para redes con estética retrofuturista y urbana.</p>
+        <div class="project-chips">
+          <span class="chip">Ilustración</span>
+          <span class="chip">Diseño Gráfico</span>
+          <span class="chip">Campaña Visual</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-img">
+        <img src="imagenes/proyecto-queso.jpg" alt="Rediseño de Portada — ¿Quién se llevó mi queso?">
+      </div>
+      <div class="project-body">
+        <div class="project-type">✦ Diseño Editorial</div>
+        <div class="project-name">Rediseño de Portada — ¿Quién se llevó mi queso?</div>
+        <p class="project-desc">Rediseño completo de portada del libro de Spencer Johnson, desde bocetos iniciales hasta versión digitalizada final. Ilustración de personajes y composición editorial infantil con IA.</p>
+        <div class="project-chips">
+          <span class="chip">Editorial</span>
+          <span class="chip">Ilustración</span>
+          <span class="chip">IA Generativa</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="creaciones">
+  <div class="reveal" style="text-align:center; max-width:600px; margin: 0 auto 0;">
+    <div class="section-label" style="justify-content:center;">Creaciones</div>
+    <h2 class="section-title">Galería <em>visual</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gal-item wide reveal">
+      <img src="imagenes/foto-naturaleza.jpg" alt="Fotografía Naturaleza">
+      <div class="gal-label">Fotografía — Naturaleza</div>
+    </div>
+    <div class="gal-item reveal">
+      <img src="imagenes/foto-macro-flores.jpg" alt="Fotografía Macro Flores">
+      <div class="gal-label">Fotografía Macro — Flores</div>
+    </div>
+    <div class="gal-item reveal">
+      <img src="imagenes/foto-jardin.jpg" alt="Jardín Composición">
+      <div class="gal-label">Jardín — Composición</div>
+    </div>
+    <div class="gal-item reveal">
+      <img src="imagenes/ilustracion-monster.jpg" alt="Ilustración Monster">
+      <div class="gal-label">Ilustración Monster Energy</div>
+    </div>
+    <div class="gal-item reveal">
+      <img src="imagenes/portada-queso.jpg" alt="Rediseño Editorial">
+      <div class="gal-label">Rediseño Editorial — ¿Quién se llevó mi queso?</div>
+    </div>
+    <div class="gal-item wide reveal">
+      <img src="imagenes/ilustracion-jonah.jpg" alt="Ilustración Jonah">
+      <div class="gal-label">Ilustración — Jonah and the Big Fish</div>
+    </div>
+    <div class="gal-item reveal">
+      <img src="imagenes/polyart-color.jpg" alt="PolyArt Digital">
+      <div class="gal-label">PolyArt Digital — Color</div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="reveal">
+    <div class="section-label">Trabajemos juntos</div>
+    <h2 class="contact-title">¿Listo para crear<br>algo <em>extraordinario?</em></h2>
+    <p class="contact-sub">Estoy disponible para proyectos de identidad de marca, diseño digital y estrategia de contenido. ¡Hablemos y hagamos realidad tu visión!</p>
+    <div class="contact-links">
+      <a href="mailto:dayanna.corredorp@gmail.com" class="contact-link">
+        <span>📧</span> dayanna.corredorp@gmail.com
+      </a>
+      <a href="#" class="contact-link">
+        <span>💼</span> LinkedIn
+      </a>
+      <a href="#" class="contact-link">
+        <span>📍</span> Chía, Cundinamarca
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Dayanna Corredor ✦</div>
+  <div class="footer-copy">© 2026 · Diseño con propósito · Portafolio 2026</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('follower');
+  let mx = 0, my = 0, fx = 0, fy = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+  function animFollower() {
+    fx += (mx - fx) * 0.12;
+    fy += (my - fy) * 0.12;
+    follower.style.left = fx + 'px';
+    follower.style.top = fy + 'px';
+    requestAnimationFrame(animFollower);
+  }
+  animFollower();
+
+  document.querySelectorAll('a, button, .skill-card, .project-card, .gal-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+      follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      follower.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+  });
+
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 50 ? '0 4px 30px rgba(200,24,90,0.1)' : 'none';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
